@@ -74,28 +74,47 @@
         .tuner-title { font-size:10px; color:#cc6622; letter-spacing:3px; text-transform:uppercase; margin-bottom:2px; }
         .tuner-subtitle { font-size:8px; color:#443322; letter-spacing:2px; }
 
-        /* Signal + readout */
-        .sig-bar {
-            margin:8px 14px 0; padding:8px 12px;
-            background:#060606; border:1px solid #111; border-radius:4px;
-        }
-        .sig-label { font-size:7px; color:#555; text-transform:uppercase; letter-spacing:2px; margin-bottom:4px; display:flex; justify-content:space-between; }
-        .sig-label span { color:#cc6622; }
-        .sig-track { height:3px; background:#0d0d0d; border-radius:2px; overflow:hidden; }
-        .sig-fill { height:100%; background:linear-gradient(90deg,#1a0d00,#cc6622); width:0%; transition:width 0.4s; border-radius:2px; }
-        .sig-fill.hot { background:linear-gradient(90deg,#2a0000,#cc2222); }
-
-        .ghost-readout {
-            margin:6px 14px 0; padding:6px 10px;
+        /* Transmission feed (always visible below tabs) */
+        .tx-feed {
+            margin:6px 14px 0; flex:1; min-height:0;
             background:#050505; border:1px solid #0d0d0d; border-radius:3px;
-            min-height:32px; position:relative; overflow:hidden;
+            overflow-y:auto; position:relative;
         }
-        .gr-label { font-size:7px; color:#332200; text-transform:uppercase; letter-spacing:2px; margin-bottom:3px; }
-        .gr-text { font-size:9px; color:#664422; line-height:1.5; min-height:14px; transition:color 0.3s; }
-        .gr-text.active { color:#cc6622; }
-        .gr-text.warn { color:#cc2222; }
-        .gr-match { font-size:7px; color:#332200; margin-top:3px; letter-spacing:1px; }
-        .gr-match span { color:#cc6622; }
+        .tx-feed::-webkit-scrollbar { width:2px; }
+        .tx-feed::-webkit-scrollbar-thumb { background:#111; }
+        .tx-feed-empty {
+            padding:20px; text-align:center;
+            font-size:8px; color:#333; letter-spacing:2px; text-transform:uppercase;
+        }
+        .tx-feed-header {
+            padding:6px 10px; font-size:7px; color:#cc6622;
+            text-transform:uppercase; letter-spacing:2px;
+            border-bottom:1px solid #0d0d0d; background:#060606;
+            position:sticky; top:0; z-index:1;
+        }
+        .tx-feed-header .ghost-freq {
+            color:#553311; font-weight:normal; float:right;
+        }
+        .tx-feed-line {
+            padding:3px 10px; font-size:11px; color:#cc6622; line-height:2;
+        }
+        .tx-feed-line.dim { color:#553311; font-size:9px; }
+        .tx-feed-line.scream { color:#cc2222; font-weight:bold; }
+        .tx-feed-line.whisper { color:#553311; font-style:italic; font-size:10px; }
+        .tx-feed-typing {
+            display:inline-block; width:7px; height:12px;
+            background:#cc6622; vertical-align:middle;
+            animation:blink .9s step-end infinite; margin-left:1px;
+        }
+        .tx-feed-status {
+            padding:4px 10px; font-size:7px; color:#333;
+            letter-spacing:1.5px; text-transform:uppercase;
+            border-top:1px solid #0a0a0a;
+        }
+        .tx-feed-status.active { color:#553311; }
+        .tx-feed-divider {
+            border:none; border-top:1px solid #111; margin:4px 10px;
+        }
 
         /* ── TABS ── */
         .tab-bar {
@@ -200,70 +219,8 @@
         }
         .seg-btn.active { color:#cc6622; border-color:#2a1500; background:rgba(200,100,30,0.08); }
 
-        /* Channel section */
-        .ch-section {
-            margin:8px 14px 10px; padding:12px;
-            border:1px solid #111; border-radius:4px;
-            text-align:center; flex-shrink:0;
-        }
-        .ch-section.ready { border-color:#2a1500; background:rgba(200,100,30,0.04); animation:chPulse 2s infinite; }
-        @keyframes chPulse { 0%,100%{box-shadow:0 0 0 rgba(200,100,30,0)} 50%{box-shadow:0 0 16px rgba(200,100,30,0.15)} }
-        .ch-label { font-size:8px; color:#444; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px; }
-        .ch-section.ready .ch-label { color:#cc6622; }
-        .ch-pips { display:flex; gap:3px; justify-content:center; margin-bottom:6px; }
-        .ch-pip { width:5px; height:5px; border-radius:50%; background:#111; transition:all 0.3s; }
-        .ch-pip.on { background:#cc6622; box-shadow:0 0 4px #cc6622; }
-        .ch-btn {
-            padding:8px 16px; font-size:9px;
-            color:#333; border:1px solid #222; border-radius:3px;
-            cursor:not-allowed; font-family:monospace; text-transform:uppercase;
-            letter-spacing:1.5px; transition:all 0.3s;
-        }
-        .ch-btn.ready { color:#cc6622; border-color:#2a1500; cursor:pointer; }
-        .ch-btn.ready:active { background:rgba(200,100,30,0.1); }
 
-        /* ── TRANSMISSION ── */
-        #tx-screen { background:#000; }
-        .tx-top {
-            display:flex; align-items:center;
-            padding:38px 14px 11px; gap:10px;
-            border-bottom:1px solid #1a0d00; flex-shrink:0;
-        }
-        .tx-signal { display:flex; gap:3px; align-items:flex-end; }
-        .tx-bar { width:3px; background:#cc6622; border-radius:1px; animation:txP 1.2s infinite; }
-        .tx-bar:nth-child(1){height:6px;animation-delay:0s}
-        .tx-bar:nth-child(2){height:10px;animation-delay:.15s}
-        .tx-bar:nth-child(3){height:14px;animation-delay:.3s}
-        .tx-bar:nth-child(4){height:10px;animation-delay:.45s}
-        .tx-bar:nth-child(5){height:6px;animation-delay:.6s}
-        @keyframes txP{0%,100%{opacity:1}50%{opacity:.15}}
-        .tx-title { font-size:11px; color:#cc6622; flex:1; text-transform:uppercase; letter-spacing:2px; }
-        .tx-ghost-name {
-            font-size:8px; color:#553311; letter-spacing:1.5px;
-            padding:6px 14px; border-bottom:1px solid #0d0800;
-            text-transform:uppercase; flex-shrink:0;
-        }
-        .tx-body { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:0; }
-        .tx-line { font-size:12px; color:#cc6622; line-height:2.1; min-height:1.2em; }
-        .tx-line.dim { color:#664422; font-size:10px; }
-        .tx-line.scream { color:#cc2222; font-weight:bold; }
-        .tx-line.whisper { color:#553311; font-style:italic; font-size:10px; }
-        .tx-cursor {
-            display:inline-block; width:8px; height:13px;
-            background:#cc6622; vertical-align:middle;
-            animation:blink .9s step-end infinite; margin-left:1px;
-        }
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-        .tx-bottom {
-            display:flex; justify-content:space-between; align-items:center;
-            padding:10px 14px; border-top:1px solid #0d0800; flex-shrink:0;
-        }
-        .tx-btn {
-            padding:8px 14px; font-size:9px;
-            color:#553311; border:1px solid #1a0d00; border-radius:4px;
-            cursor:pointer; font-family:monospace; text-transform:uppercase; letter-spacing:1px;
-        }
-        .tx-btn:active { color:#cc6622; }
 
         /* ── ANIMATIONS ── */
         @keyframes flicker1 {
@@ -322,15 +279,6 @@ The signals are already there. You are not creating them. You are tuning in.
             <div class="tuner-subtitle">Spectral Receiver v.1667</div>
         </div>
 
-        <div class="sig-bar">
-            <div class="sig-label">Signal Coherence <span id="sig-pct">0%</span></div>
-            <div class="sig-track"><div class="sig-fill" id="sig-fill"></div></div>
-        </div>
-        <div class="ghost-readout">
-            <div class="gr-label">Receiver Output</div>
-            <div class="gr-text" id="gr-text">— no signal —</div>
-            <div class="gr-match" id="gr-match"></div>
-        </div>
 
         <!-- Tabs -->
         <div class="tab-bar">
@@ -434,30 +382,9 @@ The signals are already there. You are not creating them. You are tuning in.
             </div>
         </div>
 
-        <!-- Channel -->
-        <div class="ch-section" id="ch-section">
-            <div class="ch-label" id="ch-label">Receiver Standby</div>
-            <div class="ch-pips">
-                <div class="ch-pip" id="pip0"></div><div class="ch-pip" id="pip1"></div>
-                <div class="ch-pip" id="pip2"></div><div class="ch-pip" id="pip3"></div>
-                <div class="ch-pip" id="pip4"></div><div class="ch-pip" id="pip5"></div>
-                <div class="ch-pip" id="pip6"></div>
-            </div>
-            <div class="ch-btn" id="ch-btn" onclick="openChannel()">Receive</div>
-        </div>
-    </div>
-
-    <!-- ═══════ TRANSMISSION ═══════ -->
-    <div class="view" id="tx-screen">
-        <div class="tx-top">
-            <div class="tx-signal"><div class="tx-bar"></div><div class="tx-bar"></div><div class="tx-bar"></div><div class="tx-bar"></div><div class="tx-bar"></div></div>
-            <div class="tx-title" id="tx-title">Incoming</div>
-        </div>
-        <div class="tx-ghost-name" id="tx-ghost-name">—</div>
-        <div class="tx-body" id="tx-body"></div>
-        <div class="tx-bottom">
-            <div class="tx-btn" onclick="nextGhost()">[ Next Signal ]</div>
-            <div class="tx-btn" onclick="closeTx()">[ Close ]</div>
+        <!-- Transmission feed -->
+        <div class="tx-feed" id="tx-feed">
+            <div class="tx-feed-empty" id="feed-empty">Adjust parameters to isolate signals</div>
         </div>
     </div>
 </div>
@@ -472,6 +399,9 @@ let band = 'low';
 const K = { gain:0, bandwidth:0, impedance:0, threshold:0 };
 let txTimeouts = [];
 let currentGhostIdx = -1;
+let txLineIdx = 0;
+let txDebounce = null;
+let txActive = false;
 
 // ═════════════════════════════════════════════════════
 //  GHOSTS + TRIGGER CONDITIONS
@@ -774,24 +704,6 @@ const GHOSTS = [
   },
 ];
 
-// ═════════════════════════════════════════════════════
-//  READOUT POOLS
-// ═════════════════════════════════════════════════════
-const READOUT = {
-    idle:   ['background noise','no coherent signal','static','ambient hum — 50 Hz mains'],
-    carrier:['oscillation detected — tuning','carrier wave resolving','spectral pattern emerging','waveform detected — source unknown'],
-    phase:  ['phase alignment converging','waveform sync at ##°','standing wave detected','interference pattern stabilizing'],
-    gain:   ['signal amplified — artifact present','gain boost revealing sub-harmonics','amplified signal shows periodicity','anomalous modulation in carrier'],
-    impedance:['impedance matched to geological substrate','resonance coupling established','subsurface signal path confirmed','stone-mediated propagation detected'],
-    threshold:['threshold signal detected — UNCLASSIFIED','anomalous amplitude spike','signal exceeds expected parameters','WARNING: non-standard waveform'],
-    override:['SAFETY LIMITS DISABLED','unfiltered signal — all boundaries removed','raw spectral data — no attenuation','signal source is aware of receiver'],
-    siglock: ['single waveform isolated','entity signature locked','other signals suppressed','tracking one source'],
-    infra:   ['infrasound component detected — 17.4 Hz','sub-audible vocalization pattern','infrasound modulation consistent with speech','standing wave in chest cavity range'],
-    geomag:  ['geomagnetic anomaly — no geological source','subsurface field distortion at site','magnetic signature matches 1667 event data','field lines converging on receiver'],
-    thermal: ['thermal signature — no heat source detected','ambient temperature deviation ±2.3°C','exothermic event — no chemical origin','localized thermal anomaly at receiver'],
-    bidir:   ['BIDIRECTIONAL LINK ESTABLISHED','signal source is receiving your output','two-way channel confirmed','the signal is listening'],
-    ready:   ['SIGNAL COHERENT — ENTITY RESOLVED','signature locked — ready to receive','full spectral decode available','transmission incoming'],
-};
 
 // ═════════════════════════════════════════════════════
 //  NAV
@@ -856,7 +768,7 @@ document.querySelectorAll('.knob').forEach(knob => {
 });
 
 // ═════════════════════════════════════════════════════
-//  SIGNAL + STATE SNAPSHOT
+//  STATE SNAPSHOT
 // ═════════════════════════════════════════════════════
 function getState() {
     return {
@@ -878,36 +790,7 @@ function getState() {
     };
 }
 
-function getSig(s) {
-    if(!s) s = getState();
-    const togBonus = (s.emf?8:0) + (s.siglock?12:0) + (s.infra?10:0) + (s.override?10:0) + (s.bidir?8:0);
-    const bandBonus = s.band==='mid'?6 : s.band==='high'?10 : 0;
-    const knobAvg = (s.gain+s.bandwidth+s.impedance+s.threshold)/4;
-    return Math.min(100, Math.round(
-        s.carrier*0.14 + s.phase*0.10 + s.temporal*0.06 + s.geomag*0.10 + s.thermal*0.08 +
-        knobAvg*0.14 + togBonus + bandBonus
-    ));
-}
-
-function getConf(s) {
-    if(!s) s = getState();
-    const sig = getSig(s);
-    if(sig >= 85) return 'ready';
-    if(s.override && s.bidir) return 'bidir';
-    if(s.override) return 'override';
-    if(s.threshold > 60) return 'threshold';
-    if(s.siglock) return 'siglock';
-    if(s.infra) return 'infra';
-    if(s.geomag > 60) return 'geomag';
-    if(s.thermal > 60) return 'thermal';
-    if(K.impedance > 50) return 'impedance';
-    if(K.gain > 50) return 'gain';
-    if(s.phase > 50) return 'phase';
-    if(s.carrier > 40) return 'carrier';
-    return 'idle';
-}
-
-// Best-matching ghost for current state
+// Best-matching ghost for current state (needs minimum score to trigger)
 function bestGhost(s) {
     if(!s) s = getState();
     let best = -1, bestScore = -1;
@@ -915,18 +798,97 @@ function bestGhost(s) {
         const score = g.match(s);
         if(score > bestScore) { bestScore = score; best = i; }
     });
-    return best;
+    // Need at least 4 points to trigger (2 matching conditions)
+    return bestScore >= 4 ? best : -1;
+}
+
+// ═════════════════════════════════════════════════════
+//  TRANSMISSION FEED
+// ═════════════════════════════════════════════════════
+function stopTx() {
+    txTimeouts.forEach(t => clearTimeout(t));
+    txTimeouts = [];
+    txActive = false;
+    txLineIdx = 0;
+}
+
+function startGhostFeed(gi) {
+    stopTx();
+    if(gi < 0) return;
+    currentGhostIdx = gi;
+    txActive = true;
+    const ghost = GHOSTS[gi];
+    const feed = document.getElementById('tx-feed');
+
+    // Clear empty message
+    const empty = document.getElementById('feed-empty');
+    if(empty) empty.remove();
+
+    // Add divider if there's already content
+    if(feed.children.length > 0) {
+        const hr = document.createElement('hr');
+        hr.className = 'tx-feed-divider';
+        feed.appendChild(hr);
+    }
+
+    // Ghost header
+    const header = document.createElement('div');
+    header.className = 'tx-feed-header';
+    header.innerHTML = ghost.name + '<span class="ghost-freq">' + ghost.title.split('·').pop().trim() + '</span>';
+    feed.appendChild(header);
+
+    // Notify
+    notify(ghost.name.toUpperCase(), 'Incoming transmission...');
+    flicker();
+
+    // Type out lines one by one
+    ghost.lines.forEach((msg, i) => {
+        txTimeouts.push(setTimeout(() => {
+            if(currentGhostIdx !== gi) return; // settings changed, ghost switched
+
+            const line = document.createElement('div');
+            line.className = 'tx-feed-line' + (msg.style ? ' ' + msg.style : '');
+
+            if(msg.style === 'dim') {
+                line.textContent = msg.text;
+                feed.appendChild(line);
+            } else {
+                const span = document.createElement('span');
+                line.appendChild(span);
+                const cursor = document.createElement('span');
+                cursor.className = 'tx-feed-typing';
+                line.appendChild(cursor);
+                feed.appendChild(line);
+                let ci = 0;
+                const iv = setInterval(() => {
+                    if(ci >= msg.text.length) { clearInterval(iv); cursor.remove(); return; }
+                    span.textContent += msg.text[ci]; ci++;
+                    feed.scrollTop = 99999;
+                }, 35 + Math.random() * 45);
+                txTimeouts.push(iv);
+            }
+            feed.scrollTop = 99999;
+            if(msg.style === 'scream') { flicker(); flicker(); }
+            else if(msg.style !== 'dim') flicker();
+        }, i * 1800 + 600));
+    });
+
+    // After all lines, mark done
+    txTimeouts.push(setTimeout(() => {
+        txActive = false;
+        const status = document.createElement('div');
+        status.className = 'tx-feed-status active';
+        status.textContent = 'Signal lost — adjust parameters for new contact';
+        feed.appendChild(status);
+        feed.scrollTop = 99999;
+    }, ghost.lines.length * 1800 + 1200));
 }
 
 // ═════════════════════════════════════════════════════
 //  TUNER UPDATE
 // ═════════════════════════════════════════════════════
-let lastConf = 'idle';
-
 function T() {
     const s = getState();
-    const sig = getSig(s);
-    const conf = getConf(s);
 
     // Value readouts
     document.getElementById('v-carrier').textContent = (s.carrier*4.7+14).toFixed(1)+' Hz';
@@ -934,11 +896,6 @@ function T() {
     document.getElementById('v-temporal').textContent = Math.round(s.temporal*3.59)+' yr';
     document.getElementById('v-geomag').textContent = (s.geomag*1.2).toFixed(1)+' nT';
     document.getElementById('v-thermal').textContent = '±'+(s.thermal*0.08).toFixed(1)+'°C';
-
-    // Signal bar
-    document.getElementById('sig-fill').style.width = sig+'%';
-    document.getElementById('sig-pct').textContent = sig+'%';
-    document.getElementById('sig-fill').classList.toggle('hot', sig>=70);
 
     // Slider tints
     ['sl-carrier','sl-phase','sl-temporal','sl-geomag','sl-thermal'].forEach(id => {
@@ -948,52 +905,23 @@ function T() {
         el.classList.toggle('warn', id==='sl-thermal'&&v>70);
     });
 
-    // Pips
-    const lit = Math.round((sig/100)*7);
-    for(let i=0;i<7;i++) document.getElementById(`pip${i}`).classList.toggle('on',i<lit);
+    // Glitch intensity from active controls
+    const activeCount = [s.carrier>30,s.phase>30,s.gain>30,s.impedance>30,s.threshold>30,
+        s.geomag>30,s.thermal>30,s.emf,s.siglock,s.infra,s.override,s.bidir].filter(Boolean).length;
+    if(activeCount>1) glitch=1;
+    if(activeCount>3) glitch=2;
+    if(activeCount>5) glitch=3;
 
-    // Channel
-    const ready = sig>=85;
-    document.getElementById('ch-section').classList.toggle('ready',ready);
-    document.getElementById('ch-btn').classList.toggle('ready',ready);
-    document.getElementById('ch-label').textContent =
-        ready ? '⚡ Signal Coherent — Entity Resolved' :
-        sig>60 ? 'Signature resolving... adjust parameters' :
-        sig>30 ? 'Partial signal detected' : 'Receiver Standby';
-
-    // Ghost match readout
-    const gi = bestGhost(s);
-    const gname = gi>=0 ? GHOSTS[gi].name : '—';
-    const gscore = gi>=0 ? GHOSTS[gi].match(s) : 0;
-    const matchPct = Math.min(100, Math.round(gscore*12));
-    document.getElementById('gr-match').innerHTML = sig>20
-        ? `Signature match: <span>${matchPct}%</span> ${matchPct>70?'— '+gname:''}`
-        : '';
-
-    // Glitch
-    if(sig>30) glitch=Math.max(glitch,1);
-    if(sig>60) glitch=Math.max(glitch,2);
-    if(sig>80) glitch=Math.max(glitch,3);
-
-    // Conformation notification
-    if(conf!==lastConf && conf!=='idle'){
-        lastConf=conf;
-        const labels = {
-            carrier:'SPECTRAL RESONANCE DETECTED',
-            phase:'PHASE LOCK ACQUIRED',
-            gain:'AMPLIFICATION ANOMALY',
-            impedance:'IMPEDANCE MATCHED — SUBSURFACE',
-            threshold:'ANOMALOUS AMPLITUDE — UNCLASSIFIED',
-            override:'SAFETY PROTOCOLS DISABLED',
-            siglock:'SIGNATURE ISOLATED — SINGLE ENTITY',
-            infra:'INFRASOUND VOCALIZATION DETECTED',
-            geomag:'GEOMAGNETIC DISTURBANCE — NO SOURCE',
-            thermal:'THERMAL ANOMALY — EXOTHERMIC',
-            bidir:'BIDIRECTIONAL LINK — SOURCE IS LISTENING',
-            ready:'SIGNAL COHERENT — READY TO RECEIVE',
-        };
-        if(labels[conf]) notify('RECEIVER',labels[conf]);
-    }
+    // Ghost matching — debounce so it doesn't fire on every tiny slider move
+    clearTimeout(txDebounce);
+    txDebounce = setTimeout(() => {
+        const gi = bestGhost(s);
+        if(gi >= 0 && gi !== currentGhostIdx) {
+            startGhostFeed(gi);
+        } else if(gi < 0 && currentGhostIdx >= 0 && !txActive) {
+            currentGhostIdx = -1;
+        }
+    }, 800);
 }
 
 // ═════════════════════════════════════════════════════
@@ -1001,134 +929,53 @@ function T() {
 // ═════════════════════════════════════════════════════
 setInterval(()=>{
     if(glitch===0) return;
-    const s=getState();
-    const sig=getSig(s);
-    const conf=getConf(s);
-
-    if(Math.random()<0.04+(sig/100)*0.18) flicker();
-
-    // Readout text
-    if(Math.random()<0.05+(sig/100)*0.12){
-        const pool=READOUT[conf]||READOUT.idle;
-        let line=pool[Math.floor(Math.random()*pool.length)];
-        line=line.replace('##',Math.round(s.phase*3.6));
-        const el=document.getElementById('gr-text');
-        el.textContent=line;
-        el.className='gr-text'+(conf==='ready'?' active':'')+(conf==='override'||conf==='threshold'||conf==='bidir'?' warn':'');
-        setTimeout(()=>{el.textContent='— static —';el.className='gr-text';},2800);
-    }
+    if(Math.random() < 0.04 + glitch*0.06) flicker();
 
     // Visual glitch
-    if(Math.random()<0.03+(sig/100)*0.14){
+    if(Math.random() < 0.03 + glitch*0.05){
         const v=document.querySelector('.view.active');
         if(!v) return;
-        switch(conf){
-            case 'carrier':
+        const s=getState();
+        const effects = [];
+        if(s.override) effects.push('invert');
+        if(s.bidir) effects.push('hueshift');
+        if(s.threshold>50) effects.push('saturate');
+        if(s.infra) effects.push('scale');
+        if(s.siglock) effects.push('shadow');
+        if(s.thermal>50) effects.push('sepia');
+        if(s.geomag>50) effects.push('fade');
+        if(effects.length===0) effects.push('shake');
+
+        const fx = effects[Math.floor(Math.random()*effects.length)];
+        switch(fx){
+            case 'shake':
                 v.style.transform=`translateX(${Math.random()>0.5?2:-2}px)`;
                 setTimeout(()=>{v.style.transform='';},120); break;
-            case 'phase':
-                v.style.filter='hue-rotate(40deg) brightness(0.95)';
+            case 'hueshift':
+                v.style.filter='hue-rotate(180deg) brightness(0.95)';
                 setTimeout(()=>{v.style.filter='';},80); break;
-            case 'gain':
-                v.style.filter='contrast(1.4) brightness(0.8)';
-                setTimeout(()=>{v.style.filter='';},60); break;
-            case 'threshold':
-                flicker();
+            case 'saturate':
                 v.style.filter='saturate(3) brightness(0.7)';
                 setTimeout(()=>{v.style.filter='';},100); break;
-            case 'override':
-                flicker();v.classList.add('text-glitch');
-                setTimeout(()=>{v.classList.remove('text-glitch');v.style.filter='invert(0.06)';
-                setTimeout(()=>{v.style.filter='';},60);},200); break;
-            case 'siglock':
+            case 'invert':
+                v.classList.add('text-glitch');
+                v.style.filter='invert(0.08)';
+                setTimeout(()=>{v.classList.remove('text-glitch');v.style.filter='';},200); break;
+            case 'shadow':
                 v.style.textShadow='1px 0 #cc662244, -1px 0 #cc662244';
                 setTimeout(()=>{v.style.textShadow='';},200); break;
-            case 'infra':
+            case 'scale':
                 v.style.transform='scale(1.003)';
                 setTimeout(()=>{v.style.transform='';},150); break;
-            case 'geomag':
+            case 'fade':
                 v.style.opacity='0.8';
                 setTimeout(()=>{v.style.opacity='1';},80); break;
-            case 'thermal':
+            case 'sepia':
                 v.style.filter='sepia(0.3) brightness(1.1)';
-                setTimeout(()=>{v.style.filter='';},120); flicker(); break;
-            case 'bidir':
-                flicker();flicker();v.classList.add('text-glitch');
-                v.style.filter='invert(0.1) hue-rotate(180deg)';
-                setTimeout(()=>{v.classList.remove('text-glitch');v.style.filter='';flicker();},250); break;
-            case 'ready':
-                flicker();v.classList.add('text-glitch');
-                v.style.filter='invert(0.08) hue-rotate(180deg)';
-                setTimeout(()=>{v.classList.remove('text-glitch');v.style.filter='';flicker();},200); break;
+                setTimeout(()=>{v.style.filter='';},120); break;
         }
     }
 },1600);
-
-// ═════════════════════════════════════════════════════
-//  CHANNEL + TRANSMISSION
-// ═════════════════════════════════════════════════════
-function openChannel() {
-    if(getSig()<85) return;
-    flicker();
-    currentGhostIdx = bestGhost();
-    setTimeout(()=>{ show('tx-screen'); startTx(); },300);
-}
-
-function startTx() {
-    const ghost=GHOSTS[currentGhostIdx];
-    document.getElementById('tx-title').textContent='Receiving...';
-    document.getElementById('tx-ghost-name').textContent=ghost.title;
-    const body=document.getElementById('tx-body');
-    body.innerHTML='';
-    txTimeouts.forEach(t=>clearTimeout(t));
-    txTimeouts=[];
-
-    txTimeouts.push(setTimeout(()=>{document.getElementById('tx-title').textContent=ghost.name;},1500));
-
-    ghost.lines.forEach((msg,i)=>{
-        txTimeouts.push(setTimeout(()=>{
-            body.querySelectorAll('.tx-cursor').forEach(c=>c.remove());
-            const line=document.createElement('div');
-            line.className='tx-line'+(msg.style?' '+msg.style:'');
-            if(msg.style==='dim'){
-                line.textContent=msg.text;
-                body.appendChild(line);
-            } else {
-                const span=document.createElement('span');
-                line.appendChild(span);
-                const cursor=document.createElement('span');
-                cursor.className='tx-cursor';
-                line.appendChild(cursor);
-                body.appendChild(line);
-                let ci=0;
-                const iv=setInterval(()=>{
-                    if(ci>=msg.text.length){clearInterval(iv);return;}
-                    span.textContent+=msg.text[ci]; ci++;
-                    body.scrollTop=99999;
-                },40+Math.random()*50);
-                txTimeouts.push(iv);
-            }
-            body.scrollTop=99999;
-            if(msg.style==='scream'){flicker();flicker();}
-            else if(msg.style!=='dim') flicker();
-        }, i*1800+800));
-    });
-}
-
-function nextGhost() {
-    txTimeouts.forEach(t=>clearTimeout(t)); txTimeouts=[];
-    flicker();
-    // Pick next best ghost, avoid repeat
-    const s=getState();
-    let scores=GHOSTS.map((g,i)=>({i,s:g.match(s)})).sort((a,b)=>b.s-a.s);
-    currentGhostIdx = scores[0].i===currentGhostIdx && scores.length>1 ? scores[1].i : scores[0].i;
-    setTimeout(startTx,300);
-}
-
-function closeTx() {
-    txTimeouts.forEach(t=>clearTimeout(t)); txTimeouts=[];
-    show('tuner-screen');
-}
 
 // ═════════════════════════════════════════════════════
 //  UTILS
